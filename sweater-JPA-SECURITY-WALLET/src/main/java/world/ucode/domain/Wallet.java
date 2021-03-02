@@ -2,6 +2,7 @@ package world.ucode.domain;
 
 import javax.persistence.*;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import world.ucode.domain.Currency;
 
@@ -17,14 +18,15 @@ public class Wallet {
 //    @JoinColumn(name = "currency")
 //    private Currency currencyName;
     private String currencyName;
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
-//    private Registration ownerLogin;
-    private String ownerLogin;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private Registration ownerLogin;
+   // private Registration ownerLogin;
 
     public Wallet(){}
 
-    public Wallet(String name, Long balance, String currencyName, String registration) {
+    public Wallet(String name, Long balance, String currencyName, Registration registration) {
         this.name = name;
         this.balance = balance;
         this.currencyName = currencyName;
@@ -63,11 +65,11 @@ public class Wallet {
         return currencyName;
     }
 
-    public String getOwnerLogin() {
+    public Registration getOwnerLogin() {
         return ownerLogin;
     }
 
-    public void setOwnerLogin(String ownerLogin) {
+    public void setOwnerLogin(Registration ownerLogin) {
         this.ownerLogin = ownerLogin;
     }
 }

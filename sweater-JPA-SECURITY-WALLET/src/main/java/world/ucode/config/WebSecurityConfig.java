@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-//import world.ucode.service.RegistrationService;
+import world.ucode.service.RegistrationService;
 //import world.ucode.service.UserService;
 
 import javax.sql.DataSource;
@@ -18,11 +18,11 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private DataSource dataSource;
-
 //    @Autowired
-//    private RegistrationService registrationService;
+//    private DataSource dataSource;
+
+    @Autowired
+    private RegistrationService registrationService;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -40,9 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .permitAll();
         http
                 .authorizeRequests()
-                .antMatchers("/","/greeting", "/registration", "/logn").permitAll()
+                .antMatchers("/","/greeting", "/registration").permitAll()
 
-               .mvcMatchers(HttpMethod.POST, "/logn").permitAll()
+//               .mvcMatchers(HttpMethod.POST, "/login").permitAll()
 
                 .anyRequest().authenticated()
                 .and()
@@ -50,14 +50,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .csrf().disable()
 
                 .formLogin()
-                .loginPage("/logn")
+                .loginPage("/login").permitAll()
 
-//               .loginProcessingUrl("/logn")
+//               .loginProcessingUrl("/login")
 //                .usernameParameter("login")
 //                .passwordParameter("password")
-//                //.defaultSuccessUrl()
+                //.defaultSuccessUrl()
 
-                .permitAll()
+//                .permitAll()
                 .and()
                 .logout()
                 .permitAll();
@@ -65,12 +65,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-       // auth.userDetailsService(registrationService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select login, password, active from registration where login=?")
-                .authoritiesByUsernameQuery("select r.login, ur.roles from registration r inner join user_role ur on r.id = ur.user_id where r.login=?");
+//        auth.jdbcAuthentication()
+//                .dataSource(dataSource)
+        auth.userDetailsService(registrationService)
+                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+//                .usersByUsernameQuery("select login, password, active from registration where login=?")
+//                .authoritiesByUsernameQuery("select r.login, ur.roles from registration r inner join user_role ur on r.id = ur.user_id where r.login=?");
 
     }
 }

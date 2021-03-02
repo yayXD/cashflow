@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface RegistrationRepo extends JpaRepository<Registration, Long> {
-    Registration findByLogin(String login);
+    Registration findByUsername(String username);
 
 }

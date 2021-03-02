@@ -35,7 +35,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String adds(Registration registration, Map<String, Object> model) {
-        Registration reg = registrationRepo.findByLogin(registration.getLogin());
+        Registration reg = registrationRepo.findByUsername(registration.getUsername());
         if (reg == null) {
 //            Registration registration = new Registration(login, password);
             registration.setActive(true);
@@ -51,47 +51,47 @@ public class RegistrationController {
     }
 
 
-    @GetMapping("/logn")
-    public String mains(Registration registration, Map<String, Object> model) {
-        Registration registr = registrationRepo.findByLogin(registration.getLogin());
-        if (registr != null) {
-            if (registration.getPassword().equals(registr.getPassword()) == true) {
-                registr.setActive(true);
-                model.put("message", "Вы вошли");
-                return "main";
-            } else {
-                model.put("message", "Вы ввели не правильный пароль");
-                return "logn";
-            }
-        } else {
-            model.put("message", "Такого пользователя не существует");
-            return "logn";
-        }
-
-       // return "login";
-    }
-
-    @PostMapping("/logn")
-    public String add(Registration registration, Map<String, Object> model) {
-        //Registration registration = new Registration();
-
-        //registrationRepo.save(registration);
-
-        Registration registr = registrationRepo.findByLogin(registration.getLogin());
-        if (registr != null) {
-            if (registration.getPassword().equals(registr.getPassword()) == true) {
-                registr.setActive(true);
-                model.put("message", "Вы вошли");
-                return "logn";
-            } else {
-                model.put("message", "Вы ввели не правильный пароль");
-                return "logn";
-            }
-        } else {
-            model.put("message", "Такого пользователя не существует");
-            return "logn";
-        }
-    }
+//    @GetMapping("/login")
+//    public String mains(Registration registration, Map<String, Object> model) {
+////        Registration registr = registrationRepo.findByLogin(registration.getLogin());
+////        if (registr != null) {
+////            if (registration.getPassword().equals(registr.getPassword()) == true) {
+////                registr.setActive(true);
+////                model.put("message", "Вы вошли");
+////                return "main";
+////            } else {
+////                model.put("message", "Вы ввели не правильный пароль");
+////                return "login";
+////            }
+////        } else {
+////            model.put("message", "Такого пользователя не существует");
+////            return "login";
+////        }
+//
+//        return "login";
+//    }
+//
+//    @PostMapping("/login")
+//    public String add(Registration registration, Map<String, Object> model) {
+//        //Registration registration = new Registration();
+//
+//        //registrationRepo.save(registration);
+//
+//        Registration registr = registrationRepo.findByLogin(registration.getLogin());
+//        if (registr != null) {
+//            if (registration.getPassword().equals(registr.getPassword()) == true) {
+//                registr.setActive(true);
+//                model.put("message", "Вы вошли");
+//                return "login";
+//            } else {
+//                model.put("message", "Вы ввели не правильный пароль");
+//                return "login";
+//            }
+//        } else {
+//            model.put("message", "Такого пользователя не существует");
+//            return "login";
+//        }
+//    }
 }
 
 //    @PostMapping("filter")

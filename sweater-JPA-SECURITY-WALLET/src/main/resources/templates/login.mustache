@@ -1,11 +1,13 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <body>
+Login page
 <div>
-    <form action="/logn" method="POST">
-        <input type="text" id="login" name="login" placeholder="Введите логин" />
+    <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="Введите логин" />
         <br/>
-        <input type="text" name="password" placeholder="Введите пароль"/>
+        <input type="password" name="password" placeholder="Введите пароль"/>
         <br/>
 <!--        <input type="text" name="email" placeholder="Введите email">-->
         <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>

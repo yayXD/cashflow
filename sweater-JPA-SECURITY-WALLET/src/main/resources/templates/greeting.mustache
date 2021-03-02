@@ -5,10 +5,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
 
 <a href="/registration">Регистрация</a>
 <br/>
-<a href ="/logn">Вход</a>
+<a href ="/login">Вход</a>
 <br/>
 <a href ="/wallet">Создать кошелек</a>
 <br/>

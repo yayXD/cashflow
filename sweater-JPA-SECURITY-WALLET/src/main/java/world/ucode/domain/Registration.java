@@ -9,12 +9,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "registration")
-public class Registration {//implements RegistrationDetails {
+public class Registration implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    private String login;
+    private String username;
     private String password;
    // private String email;
     private boolean active;
@@ -27,49 +27,44 @@ public class Registration {//implements RegistrationDetails {
     public Registration() {
     }
 
-    public Registration(String login, String password) {
-        this.login = login;
+    public Registration(String username, String password) {
+        this.username = username;
         this.password = password;
         //this.email = email;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return getRoles();
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
 
     public String getPassword() {
         return password;
     }
 
-//    @Override
-//    public String getUsername() {
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return isActive();
-//    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive();
+    }
 
 //    public String getEmail() {
 //        return email;
@@ -83,8 +78,8 @@ public class Registration {//implements RegistrationDetails {
         this.id = id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
