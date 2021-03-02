@@ -1,26 +1,26 @@
+<!DOCTYPE HTML>
 <html>
-
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
 <body>
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+    <input type="submit" value="Выйти"/>
+</form>
+<!--<a href="/registration">Регистрация</a>-->
+<!--<a href ="/signin">Вход</a>-->
+<a href ="/wallet">Создать кошелек</a>
+<br/>
+<a href="/transaction">Выполнить действие с кошельком</a>
+<!--<div>Список сообщений</div>-->
+{{#wallets}}
     <div>
-        <form method="post">
-            <input type="text" name="login" placeholder="Введите логин" />
-            <input type="text" name="password" placeholder="Введите пароль">
-            <input type="text" name="email" placeholder="Введите email">
-            <button type="submit">Добавить</button>
-        </form>
+        <b>{{name}}</b>
+        <span>{{balance}}</span>
+        <i>{{currency}}</i>
     </div>
-    <div>Список сообщений</div>
-    <form method="post" action="filter">
-        <input type="text" name="filter">
-        <button type="submit">Найти</button>
-    </form>
-    {{#messages}}
-    <div>
-        <b>{{id}}</b>
-        <i>{{login}}</i>
-        <span>{{password}}</span>
-        <span>{{email}}</span>
-    </div>
-    {{/messages}}
+{{/wallets}}
 </body>
 </html>

@@ -1,0 +1,42 @@
+<html>
+
+<body>
+<div>
+    <form method="post" id="myForm">
+        <input type="text" name="walletName" placeholder="Введите имя кошелька"/>
+        <br/>
+        <label>Выберите тип трансакции</label>
+        <div class="typ">
+            <input id="type0" type="radio"  name="type" value="income">
+            <label for="type0">доход</label>
+            <br/>
+            <label>Выберите категорию</label>
+            <br/>
+            <div class="income">
+                <div>
+                    <input id="incom0" type="radio" name="categoryIn">
+                    <label for="incom0">зарплата</label>
+                </div>
+                <div>
+                    <input id="income1" type="radio" name="categoryIn">
+                    <label for="income1">кешбек</label>
+                </div>
+            </div>
+            <input id="type1" type="radio" name="type" value="expense">
+            <label for="type1">расход</label>
+            <div class="expense">
+                <input id="expens0" type="radio" name="categoryEx">
+                <label for="expens0">покупка</label>
+                <input id="expens1" type="radio" name="categoryEx">
+                <label for="expens1">комунальные платежи</label>
+                <input id="expens2" type="radio" name="categoryEx">
+                <label for="expens2">услуги</label>
+            </div>
+        </div>
+        <input type="date" name="date" placeholder="Введите дату"/>
+        <input type="text" name="description" placeholder="Напишите комментарий"/>
+        <br/>
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+        <button type="submit">Создать трансакцию</button>
+    </form>
+</div>

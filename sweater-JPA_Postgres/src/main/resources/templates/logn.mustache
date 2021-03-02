@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+<div>
+    <form action="/logn" method="POST">
+        <input type="text" id="login" name="login" placeholder="Введите логин" />
+        <br/>
+        <input type="text" name="password" placeholder="Введите пароль"/>
+        <br/>
+<!--        <input type="text" name="email" placeholder="Введите email">-->
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+        <button type="submit" >Войти</button>
+        <br/>
+    </form>
+</div>
+{{#message}}
+    {{message}}
+{{/message}}
+<br/>
+<a href="/greeting">Вернуться</a>
+<!--<script >-->
+<!--    function setLogin() {-->
+<!--        let ownerLogin = document.getElementById("login");-->
+<!--        sessionStorage.setItem('login', ownerLogin);    }-->
+
+<!--</script>-->
+
+</body>
+</html>
+<!--как сохранить в глобальных переменных логин-->
