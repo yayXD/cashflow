@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Cashflow</title>
+		<meta name="description=" content="Cashflow">
+		<link rel="stylesheet" href="./css/style.css">
+	</head>
+	<body>
+		<header>
+			<h1><a href="/greeting">Cashflow</a></h1>
+			<div class="logNreg">
+				<form action="/logout" method="post">
+					<input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+					<input type="submit" value="Выйти"/>
+				</form>
+			</div>
+		</header>
+		
+		<div class="CreateWalet">
+			<div class="createWWindow">
+				<p class="zagCreate">Создание кошелька</p>
+				
+				<form method="post" id="myForm">
+					<input class="inputSize" type="text" name="name" placeholder="Введите имя кошелька"/>
+					<p>Выберите валюту</p>
+					<div class="curren">
+						<input id="currency0" type="radio"  name="currency" value="gryvna" checked>
+						<label for="currency0">Гривня</label>
+						<input id="currency1" type="radio" name="currency" value="dollar">
+						<label for="currency1">Доллар</label>
+					</div>
+					<input class="inputSize" type="number" name="balance" placeholder="Введите баланс" min="0" max="2000000" step="0.1"/>
+					<input class="inputSize" type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+					<button type="submit">Создать кошелек</button>
+				</form>
+				<p>
+					{{#message}}
+						{{message}}
+					{{/message}}
+				</p>
+			</div>
+		</div>
+		
+		<footer>
+			<h1>Cashflow</h1>
+		</footer>
+	</body>
+</html>
