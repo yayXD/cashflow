@@ -26,21 +26,21 @@
 					<p>Выберите тип трансакции</p>
 					<div class="typ">
 						<div class="typtyp">
-							<input id="type0" type="radio"  name="type" value="income">
+							<input id="type0" type="radio"  name="type" value="income" onclick="changeDisplay()">
 							<label for="type0">Доход</label>
-							<input id="type1" type="radio" name="type" value="expense">
+							<input id="type1" type="radio" name="type" value="expense" onclick="changeDisplay()">
 							<label for="type1">Расход</label>
 						</div>
 						
-						<p>Выберите категорию</p>
-						<div class="income">
+						<p class="zagCat" style="display: none;">Выберите категорию</p>
+						<div class="income" style="display: none;">
 							<input id="incom0" type="radio" name="categoryIn">
 							<label for="incom0">Зарплата</label>
 							<input id="income1" type="radio" name="categoryIn">
 							<label for="income1">Кешбек</label>
 						</div>
 						
-						<div class="expense">
+						<div class="expense" style="display: none;">
 							<input id="expens0" type="radio" name="categoryEx">
 							<label for="expens0">Покупка</label>
 							<input id="expens1" type="radio" name="categoryEx">
@@ -61,4 +61,5 @@
 			<h1>Cashflow</h1>
 		</footer>
 	</body>
+	<script src="./js/script.js"></script>
 </html>
