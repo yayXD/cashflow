@@ -2,6 +2,7 @@ package world.ucode.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.http.HttpMethod;
@@ -9,7 +10,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import world.ucode.service.RegistrationService;
 //import world.ucode.service.UserService;
 
@@ -23,6 +26,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RegistrationService registrationService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return  new BCryptPasswordEncoder(8);
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -68,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        auth.jdbcAuthentication()
 //                .dataSource(dataSource)
         auth.userDetailsService(registrationService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+                .passwordEncoder(passwordEncoder);
 //                .usersByUsernameQuery("select login, password, active from registration where login=?")
 //                .authoritiesByUsernameQuery("select r.login, ur.roles from registration r inner join user_role ur on r.id = ur.user_id where r.login=?");
 

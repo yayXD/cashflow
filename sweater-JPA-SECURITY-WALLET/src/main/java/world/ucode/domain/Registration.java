@@ -1,9 +1,11 @@
 package world.ucode.domain;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
@@ -13,8 +15,11 @@ public class Registration implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-
+   // @NotBlank(message = "Заполните это поле")
+  //  @Length(min = 4, max = 20, message = "Длина должна быть не меньше 4 и не больше 20 символов")
     private String username;
+   // @NotBlank(message = "Заполните это поле")
+  //  @Length(min = 4, max = 20, message = "Длина должна быть не меньше 4 и не больше 20 символов")
     private String password;
    // private String email;
     private boolean active;
@@ -74,9 +79,9 @@ public class Registration implements UserDetails {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    //public void setId(Long id) {
+    //    this.id = id;
+  //  }
 
     public void setUsername(String username) {
         this.username = username;

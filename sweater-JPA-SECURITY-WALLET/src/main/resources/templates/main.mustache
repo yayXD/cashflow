@@ -14,12 +14,77 @@
 <br/>
 <a href="/transaction">Выполнить действие с кошельком</a>
 <!--<div>Список сообщений</div>-->
-{{#wallets}}
-    <div>
-        <b>{{name}}</b>
-        <span>{{balance}}</span>
-        <i>{{currency}}</i>
-    </div>
-{{/wallets}}
+<br/>
+<label>Все ваши кошельки</label>
+<br/>
+<div>
+    <table border="1">
+    <tr>
+        <th>№</th>
+        <th>Имя</th>
+        <th>Баланс</th>
+        <th>Валюта</th>
+        <th>Номер карты</th>
+        <th>Категория</th>
+        <th>Тэг</th>
+    </tr>
+        {{#wallets}}
+            <tr>
+<!--            <div>-->
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+                <td>{{balance}}</td>
+                <td>{{currencyNames.curName}}</td>
+                <td>{{itemNumber}}</td>
+                <td>{{category.categoryName}}</td>
+                <td>{{tag.tagName}}</td>
+            </tr>
+<!--            </div>-->
+        {{/wallets}}
+    </table>
+</div>
+<br/>
+<label>Введите номер карты для получения списка трансакций по ней</label>
+<br/>
+<form action="/main" method="post">
+    <input type="number" name="walletNumber" placeholder="Введите номер кошелька получателя" min="0" max="20000000"/>
+<br/>
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+    <button type="submit">Найти</button>
+</form>
+<div>
+    <table border="1">
+        <tr>
+            <th>№</th>
+            <th>Имя кошелька</th>
+            <th>Баланс кошелька</th>
+            <th>Валюта</th>
+            <th>Сумма перевода</th>
+            <th>Номер карты получателя</th>
+            <th>Тип перевода</th>
+            <th>Категория</th>
+            <th>Тэг</th>
+            <th>Дата</th>
+            <th>Описание</th>
+        </tr>
+        {{#trans}}
+            <tr>
+                <!--            <div>-->
+                <td>{{id}}</td>
+                <td>{{walletName.name}}</td>
+                <td>{{walletName.balance}}</td>
+                <td>{{walletName.currencyNames.curName}}</td>
+                <td>{{spending}}</td>
+                <td>{{receiverNumber}}</td>
+                <td>{{type}}</td>
+                <td>{{walletName.category.categoryName}}</td>
+                <td>{{walletName.tag.tagName}}</td>
+                <td>{{description}}</td>
+            </tr>
+            <!--            </div>-->
+        {{/trans}}
+    </table>
+</div>
+
 </body>
 </html>

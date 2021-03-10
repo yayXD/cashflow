@@ -1,9 +1,6 @@
 package world.ucode.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Transaction {
@@ -11,29 +8,41 @@ public class Transaction {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    private String walletName;
+    @ManyToOne(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "wallet_id", nullable = false)
+    private Wallet walletName;
+
     private String type;
-    private String category;
-    private String tag;
+
+//    @ManyToOne(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "category_id", nullable = false)
+//    private Category category;
+//
+//    @ManyToOne(cascade =CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "tag_id", nullable = false)
+//    private Tag tag;
+
+    private Double spending;
     private String date;
+    private int receiverNumber;
     private String description;
 
     public Transaction(){}
 
-    public Transaction(String walletName, String type, String category, String tag, String date, String description) {
+    public Transaction(Wallet walletName, String type,
+                       //Category category, Tag tag,
+                       Double spending, String date, String description, int receiverNumber) {
         this.walletName = walletName;
         this.type = type;
-        this.category = category;
-        this.tag = tag;
+//        this.category = category;
+//        this.tag = tag;
+        this.spending = spending;
         this.date = date;
         this.description = description;
+        this.receiverNumber = receiverNumber;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getWalletName() {
+    public Wallet getWalletName() {
         return walletName;
     }
 
@@ -41,12 +50,16 @@ public class Transaction {
         return type;
     }
 
-    public String getCategory() {
-        return category;
-    }
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public Tag getTag() {
+//        return tag;
+//    }
 
-    public String getTag() {
-        return tag;
+    public Double getSpending() {
+        return spending;
     }
 
     public String getDate() {
@@ -57,11 +70,7 @@ public class Transaction {
         return description;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setWalletName(String walletName) {
+    public void setWalletName(Wallet walletName) {
         this.walletName = walletName;
     }
 
@@ -69,12 +78,16 @@ public class Transaction {
         this.type = type;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
+//
+//    public void setTag(Tag tag) {
+//        this.tag = tag;
+ //   }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setBalance(Double spending) {
+        this.spending = spending;
     }
 
     public void setDate(String date) {
@@ -83,5 +96,13 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getReceiverNumber() {
+        return receiverNumber;
+    }
+
+    public void setReceiverNumber(int receiverNumber) {
+        this.receiverNumber = receiverNumber;
     }
 }

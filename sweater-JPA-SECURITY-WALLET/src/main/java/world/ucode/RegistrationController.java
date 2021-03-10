@@ -1,20 +1,31 @@
 package world.ucode;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import world.ucode.domain.Currency;
 import world.ucode.domain.Registration;
+import world.ucode.repos.CurrencyRepo;
 import world.ucode.repos.RegistrationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import world.ucode.domain.Role;
+import world.ucode.service.RegistrationService;
+
+import javax.validation.Valid;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Map;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    private RegistrationRepo registrationRepo;
+    private RegistrationService registrationService;
 
+//    @Autowired
+//    private CurrencyRepo currencyRepo;
 //    @GetMapping("/greeting")
 //    public String greeting(
 //            @RequestParam(name="name", required=false, defaultValue="World") String name,
@@ -34,18 +45,27 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String adds(Registration registration, Map<String, Object> model) {
-        Registration reg = registrationRepo.findByUsername(registration.getUsername());
-        if (reg == null) {
-//            Registration registration = new Registration(login, password);
-            registration.setActive(true);
-            registration.setRoles(Collections.singleton(Role.USER));
-            registrationRepo.save(registration);
+    public String addUser(@Valid Registration registration, BindingResult bindingResult, Model model) {
+      //  Registration reg = registrationRepo.findByUsername(registration.getUsername());
+        if(bindingResult.hasErrors()) {
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errors);
+            return  "registration";
+        }
+//        if (reg == null) {
+////            Registration registration = new Registration(login, password);
+//            registration.setActive(true);
+//            registration.setRoles(Collections.singleton(Role.USER));
+//            registrationRepo.save(registration);
+//
+//
+//            //Iterable<Registration> registr = registrationRepo.findAll();
 
-            //Iterable<Registration> registr = registrationRepo.findAll();
-            model.put("message", "Вы зарегистрированы");
+        if(registrationService.addUser(registration)) {
+           // model.addAttribute("message", "Этот логин уже существует");
+            model.addAttribute("message", "Вы зарегистрированы");
         } else
-            model.put("message", "Этот логин уже существует");
+            model.addAttribute("message", "Этот логин уже существует");
 
         return"registration";
     }
