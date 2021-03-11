@@ -31,9 +31,9 @@ public class Currency {
     //    return id;
     //}
 
-   // public String getcurName() {
-    //    return curName;
-   // }
+    public String getCurName() {
+        return curName;
+    }
 
     public String getTicker() {
         return ticker;
@@ -43,7 +43,7 @@ public class Currency {
         id = id;
     }
 
-    public void setcurName(String curName) {
+    public void setCurName(String curName) {
         this.curName = curName;
     }
 

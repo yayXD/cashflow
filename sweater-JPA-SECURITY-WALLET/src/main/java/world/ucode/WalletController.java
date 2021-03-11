@@ -62,20 +62,23 @@ public class WalletController {
          Wallet reg = walletRepo.findByName(name);
         c = currencyRepo.findByCurName(currency);
         if (reg == null && c != null) {
-            int itemNumber = makeItemNumber();
-            Category cat = categoryRepo.findByCategoryName(categoryEx);
-            Tag t = tagRepo.findByTagName(tag);
-            if(t == null) {
-                Tag ta = new Tag(tag, tag);
-                tagRepo.save(ta);
-            }
-            t = tagRepo.findByTagName(tag);
-            Date data = new Date();
-            Wallet wallet = new Wallet(name, balance, c, registration, data.toString(),itemNumber, cat, t);
-            walletRepo.save(wallet);
-            //Iterable<Wallet> wal = walletRepo.findByOwnerLogin(ownerLogin);
-            //model.put("message", wal);
-            model.put("message", "Вы создали новый кошелек");
+            if(balance != null) {
+                int itemNumber = makeItemNumber();
+                Category cat = categoryRepo.findByCategoryName(categoryEx);
+                Tag t = tagRepo.findByTagName(tag);
+                if (t == null) {
+                    Tag ta = new Tag(tag, tag);
+                    tagRepo.save(ta);
+                }
+                t = tagRepo.findByTagName(tag);
+                Date data = new Date();
+                Wallet wallet = new Wallet(name, balance, c, registration, data.toString(), itemNumber, cat, t);
+                walletRepo.save(wallet);
+                //Iterable<Wallet> wal = walletRepo.findByOwnerLogin(ownerLogin);
+                //model.put("message", wal);
+                model.put("message", "Вы создали новый кошелек");
+            } else
+                model.put("message", "Не возможно создать такой кошелек. Заполните поле баланс");
         } else
             model.put("message", "Не возможно создать такой кошелек. Это имя кошелька уже занято");
         return "wallet";
@@ -97,10 +100,10 @@ public class WalletController {
     public int makeItemNumber() {
         int y = 0;
         SecureRandom rand = new SecureRandom();
-        y = rand.nextInt(9999999 - 10000000);
+        y = rand.nextInt(99999999 - 10000000);
         while (itemNumbers.contains(y) == true) {
             rand = new SecureRandom();
-            y = rand.nextInt(9999999 - 10000000);
+            y = rand.nextInt(99999999 - 10000000);
         }
         itemNumbers.add(y);
         return y;

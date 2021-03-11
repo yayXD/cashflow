@@ -45,14 +45,14 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@Valid Registration registration, BindingResult bindingResult, Model model) {
+    public String addUser(Registration registration, Model model) {
       //  Registration reg = registrationRepo.findByUsername(registration.getUsername());
-        if(bindingResult.hasErrors()) {
-            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-            return  "registration";
-        }
-//        if (reg == null) {
+//        if(bindingResult.hasErrors()) {
+//            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+//            model.mergeAttributes(errors);
+//            return  "registration";
+//        }
+////        if (reg == null) {
 ////            Registration registration = new Registration(login, password);
 //            registration.setActive(true);
 //            registration.setRoles(Collections.singleton(Role.USER));
@@ -60,12 +60,14 @@ public class RegistrationController {
 //
 //
 //            //Iterable<Registration> registr = registrationRepo.findAll();
-
-        if(registrationService.addUser(registration)) {
-           // model.addAttribute("message", "Этот логин уже существует");
-            model.addAttribute("message", "Вы зарегистрированы");
+        if(registration.getUsername() != null && registration.getPassword() != null) {
+            if (registrationService.addUser(registration)) {
+                // model.addAttribute("message", "Этот логин уже существует");
+                model.addAttribute("message", "Вы зарегистрированы");
+            } else
+                model.addAttribute("message", "Этот логин уже существует");
         } else
-            model.addAttribute("message", "Этот логин уже существует");
+            model.addAttribute("message", "Заполните все поля формы");
 
         return"registration";
     }

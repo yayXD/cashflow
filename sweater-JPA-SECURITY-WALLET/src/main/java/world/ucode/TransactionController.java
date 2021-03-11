@@ -42,74 +42,49 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction")
-    public String add(@RequestParam("tag") String wallName, //@RequestParam("type") String type,
+    public String add(@AuthenticationPrincipal Registration registration, @RequestParam("tag") String wallName, //@RequestParam("type") String type,
                       //@RequestParam("categoryEx") String categoryEx,
                      // @RequestParam String tag,
                       @RequestParam Double spending,
-                      @RequestParam String description, @RequestParam int receiverNumber, Map<String, Object> model) {
+                      @RequestParam String description, @RequestParam int receiverNumber, Model model) {
        // makeCategory();
        // makeTag();
        // Wallet w = walletRepo.findByName(walletName);
        // if (w != null) {
         Wallet wal = walletRepo.findByName(wallName);
+        if(spending != null) {
             if (wal.getBalance() > spending) {
                 Wallet w = walletRepo.findByItemNumber(receiverNumber);
-                if(w != null) {
-               // if (type.equals("expense") == true || type.equals("income") == true) {
-//                    model2.addAttribute("gender", user.getGender());
-                   // Category c = categoryRepo.findByCategoryName(categoryEx);
-                  //  Tag t = tagRepo.findByTagName(tag);
-                   // if (c != null && t != null) {
+                if(w != null && receiverNumber != wal.getItemNumber()) {
+                   // if(spending != null) {
                         Date data = new Date();
                         Transaction tr = new Transaction(wal, "expense", spending, data.toString(), description, receiverNumber);
                         transactionRepo.save(tr);
-                    wal.setBalance(wal.getBalance() - spending);
+                        if(wal.getCurrencyNames().getCurName().equals("dollar") == true)
+                            wal.setBalance(wal.getBalance() - spending / 30);
+                         else
+                            wal.setBalance(wal.getBalance() - spending);
                         walletRepo.save(wal);
                         Transaction tr2 = new Transaction(w, "income", spending, data.toString(), description, wal.getItemNumber());
                         transactionRepo.save(tr2);
-                        w.setBalance(w.getBalance() + spending);
+                        if(w.getCurrencyNames().getCurName().equals("dollar") == true)
+                            w.setBalance(w.getBalance() + spending / 30);
+                        else
+                            w.setBalance(w.getBalance() + spending);
                         walletRepo.save(w);
-                        model.put("message", "Вы создали трансакцию");
-//                        if (type.equals("expense") == true) {
-//                            w.setBalance(w.getBalance() - balance);
-//                            walletRepo.save(w);
-//                        } else {
-//                            w.setBalance(w.getBalance() + balance);
-//                            walletRepo.save(w);
-//                        }
-//                    }
-//                    model.put("message", "Не правильно указана категория или тэг");
-//                }
-//                model.put("message", "Не правильно указан тип");
+                        model.addAttribute("message", "Вы создали трансакцию");
+
+                } else
+                    model.addAttribute("message", "Не правильно указан номер карты получателя");
+
             } else
-                model.put("message", "Не правильно указан номер карты получателя");
+                model.addAttribute("message", "Недостаточно средств на счету для данной операции");
         } else
-            model.put("message", "Недостаточно средств на счету для данной операции");
+            model.addAttribute("message", "Не заполнили поле сумма перевода");
+        Iterable<Wallet> wall = walletRepo.findByOwnerLogin(registration);
+        model.addAttribute("wall", wall);
         return "transaction";
     }
 
-//    public void makeCategory() {
-//        String[] cat = new String[]{"salary", "cashback", "interest", "purchase", "communal", "services", "connection",
-//            "taxi", "tickets"};
-//        for( int i = 0; i < 9; i++) {
-//            Category c = categoryRepo.findByCategoryName(cat[i]);
-//            if(c == null) {
-//                Category ca = new Category(cat[i], cat[i]);
-//                categoryRepo.save(ca);
-//            }
-//        }
-//    }
-
-//    public void makeTag() {
-//        String[] t = new String[]{"products", "equipment", "medicine", "flights", "clothes", "tools", "delivery",
-//                "internet"};
-//        for( int i = 0; i < 8; i++) {
-//            Tag ta = tagRepo.findByTagName(t[i]);
-//            if(ta == null) {
-//                Tag tag = new Tag(t[i], t[i]);
-//                tagRepo.save(tag);
-//            }
-//        }
-//    }
 
 }
