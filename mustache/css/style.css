@@ -129,6 +129,9 @@ header .logNreg input {
 .Profile h4 {
 	font-size: 40px;
 }
+.Profile h5 {
+	font-size: 30px;
+}
 .Profile .walets-log-create {
 	display: flex;
 	align-items: center;
@@ -172,6 +175,7 @@ header .logNreg input {
 	min-height: 130px;
 	border: 1px black solid;
 	padding: 5px;
+	margin-bottom: 20px;
 }
 .Profile .walets-table .walet {
 	position: relative;
@@ -180,10 +184,19 @@ header .logNreg input {
 	padding: 5px;
 	margin: 0 5px;
 }
+.Profile .walets-table .walet .tagName {
+	position: absolute;
+	right: 2%;
+	top: 4%;
+}
 .Profile .walets-table .walet .balanceNcurrency {
 	position: absolute;
-	right: 3%;
+	right: 2%;
 	bottom: 4%;
+}
+.Profile .historyTable {
+	width: 100%;
+	height: auto;
 }
 
 
@@ -223,6 +236,27 @@ header .logNreg input {
 .CreateWalet .createWWindow .curren #currency1 {
 	margin-left: 10px;
 }
+.CreateWalet .createWWindow .expense {
+	margin-bottom: 10px;
+}
+.CreateWalet .createWWindow .expense #expens1 {
+	margin-left: 10px;
+}
+.CreateWalet .createWWindow .expense #expens2 {
+	margin-left: 10px;
+}
+.CreateWalet .createWWindow .expense #expens3 {
+	margin-left: 10px;
+}
+.CreateWalet .createWWindow .expense #expens4 {
+	margin-left: 10px;
+}
+.CreateWalet .createWWindow .expense #expens5 {
+	margin-left: 10px;
+}
+.CreateWalet .createWWindow .expense #expens6 {
+	margin-left: 10px;
+}
 .CreateWalet .createWWindow #loadIconImg {
 	width: 97%;
 	height: 20px;
@@ -260,6 +294,12 @@ header .logNreg input {
 }
 .Transaction .transactionWindow p {
 	margin-bottom: 5px;
+}
+.Transaction .transactionWindow .selectSize {
+	width: 97%;
+	height: 25px;
+	padding: 2px;
+	margin-bottom: 15px;
 }
 .Transaction .transactionWindow .inputSize {
 	width: 97%;
